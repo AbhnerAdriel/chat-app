@@ -28,3 +28,4 @@ Scenario: Login com senha incorreta
     When eu informo meu e-mail correto mas a senha errada
     Then o sistema deve impedir o acesso
     And exibir a mensagem "Credenciais inválidas"
+    And registrar a tentativa de login suspeita
