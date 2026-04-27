@@ -16,3 +16,17 @@ Feature: Notificações e Alertas
     When "Ana" abre a conversa com "João"
     Then o badge ao lado de "João" é removido
     And todas as mensagens de "João" ficam marcadas como lidas
+
+  Scenario: Erro ao carregar notificações devido a falha de conexão
+    Given que o usuário "Ana" está na tela "Lista de Conversas"
+    And o dispositivo está sem conexão com a internet
+    When "Ana" tenta atualizar a lista de notificações
+    Then o sistema exibe o banner de erro "Sem conexão. Verifique sua internet."
+    And o badge numérico não é atualizado
+
+  Scenario: Erro interno do servidor ao consultar badges
+    Given que o usuário "Ana" está autenticado no sistema
+    And o servidor de notificações está em estado de manutenção (indisponível)
+    When o serviço recebe a requisição GET /api/v1/notifications/badges
+    Then o serviço retorna HTTP 503 Service Unavailable
+    And o corpo da resposta contém a mensagem "Serviço temporariamente indisponível"
