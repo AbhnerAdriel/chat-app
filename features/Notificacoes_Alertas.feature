@@ -37,3 +37,8 @@ Feature: Notificações e Alertas
     When o usuário "João" envia uma mensagem urgente para "Ana"
     Then o sistema exibe o banner de notificação na tela de bloqueio
     And o dispositivo emite vibração curta
+  
+  Scenario: Som de notificação customizado por contato
+    Given que o usuário "Ana" configurou um som personalizado para "João"
+    When "João" envia uma nova mensagem
+    Then o sistema reproduz o som customizado ao invés do som padrão
